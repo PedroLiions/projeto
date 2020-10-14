@@ -12,5 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $produtos = \App\Produto::orderBy('price', 'asc')->get();
+
+    "select * from produtos order by id asc";
+
+    dd($produtos);
+
 });
+
+
+Route::get('/teste', function () {
+    return view('teste');
+});
+
+Route::get('/produtos', 'ProdutoController@listaProdutos')->name('lista-produtos');
+Route::post('/produtos/criar', 'ProdutoController@criar');
+Route::get('/produtos/editar/{id}', 'ProdutoController@pegarUnicoProduto');
+Route::post('/produtos/editar/save', 'ProdutoController@saveEditacaoProduto');
+Route::get('/produtos/delete/{id}', 'ProdutoController@delete');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
